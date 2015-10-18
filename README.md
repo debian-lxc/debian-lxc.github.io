@@ -6,7 +6,8 @@ A series of HOWTOs on how to use latest stable version of [Linux Containers](htt
 
 ## Contents
 
-- [Install LXC](#usage)
+- [Install LXC](#install-lxc)
+- [Enable Apparmor](#enable-apparmor)
 
 
 ## Install LXC
