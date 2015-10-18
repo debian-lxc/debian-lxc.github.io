@@ -6,7 +6,7 @@ relative_permalinks: true
 
 # Setup
 title:               Debian LXC
-tagline:             'HOWTOs for using LXC on Debian'
+tagline:             'HOWTOs for LXC on Debian'
 description:         'A series of HOWTO on how to use latest stable version of <a href="https://linuxcontainers.org/" target="_blank">Linux Containers</a> on Debian, including unprivileged containers'
 url:                 http://debian-lxc.github.io
 baseurl:             ''
