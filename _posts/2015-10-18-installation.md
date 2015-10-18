@@ -4,8 +4,7 @@ layout: post
 title: Installation
 ---
 
-
-# Installation
+Use these steps to install lxc-1.1.4 on Debian Jessie
 
 ## Install LXC
 
