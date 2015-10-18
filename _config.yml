@@ -1,8 +1,8 @@
 # Permalinks
 #
 # Use of `relative_permalinks` ensures post links from the index work properly.
-permalink:           /:title/
-relative_permalinks: true
+permalink:           none
+#relative_permalinks: true
 
 # Setup
 title:               Debian LXC
