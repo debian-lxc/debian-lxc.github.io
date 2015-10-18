@@ -1,7 +1,9 @@
 ---
 layout: default
 title: Home
+published: true
 ---
+
 
 <div class="posts">
   {% for post in paginator.posts %}
@@ -14,7 +16,7 @@ title: Home
 
     <span class="post-date">{{ post.date | date_to_string }}</span>
 
-    {{ post.excerpt }}
+    {{ post.content | strip_html | truncatewords: 50 }}
   </div>
   {% endfor %}
 </div>
@@ -35,4 +37,3 @@ title: Home
     <span class="pagination-item newer">Newer</span>
   {% endif %}
 </div>
-
