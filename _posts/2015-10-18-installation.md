@@ -4,6 +4,7 @@ layout: post
 title: Installation
 ---
 
+
 Use these steps to install lxc-1.1.4 on Debian Jessie
 
 ## Install LXC from This Repository
@@ -11,7 +12,7 @@ Use these steps to install lxc-1.1.4 on Debian Jessie
 - Add apt source entry.
 
 ```
-# cat > /etc/apt/sources.list.d/debian-lxc.github.io-lxc.list << END
+host# cat > /etc/apt/sources.list.d/debian-lxc.github.io-lxc.list << END
 deb http://debian-lxc.github.io/packages/lxc jessie main
 deb-src http://debian-lxc.github.io/packages/lxc jessie main
 END
@@ -20,20 +21,20 @@ END
 - Import public key.
 
 ```
-# apt-key adv --recv-keys --keyserver keyserver.ubuntu.com C6E77093
+host# apt-key adv --recv-keys --keyserver keyserver.ubuntu.com C6E77093
 ```
 
 - Check available packages.
 
 ```
-# apt-get update
-# apt-cache policy cgmanager lxc lxcfs 
+host# apt-get update
+host# apt-cache policy cgmanager lxc lxcfs 
 ```
 
 - Install LXC, forcing upgrade of related packages when necessary. 
 
 ```
-# apt-get install cgmanager lxc lxc-templates lxcfs
+host# apt-get install cgmanager lxc lxc-templates lxcfs
 ```
 
 ## Enable Apparmor
@@ -47,7 +48,7 @@ GRUB_CMDLINE_LINUX="apparmor=1 security=apparmor"
 - Update grub menu
 
 ```
-# update-grub
+host# update-grub
 ```
 
 - Allow incomplete apparmor support. Edit ``/etc/lxc/default.conf``, add this line on top
@@ -61,7 +62,7 @@ lxc.aa_allow_incomplete = 1
 - Verify apparmor status
 
 ```
-# aa-status
+host# aa-status
 apparmor module is loaded.
 4 profiles are loaded.
 4 profiles are in enforce mode.
@@ -75,6 +76,6 @@ apparmor module is loaded.
 0 processes are in complain mode.
 0 processes are unconfined but have a profile defined.
 
-# ls /sys/kernel/security/
+host# ls /sys/kernel/security/
 apparmor
 ```
