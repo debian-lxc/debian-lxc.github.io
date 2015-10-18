@@ -10,7 +10,7 @@ Use these steps to install lxc-1.1.4 on Debian Jessie
 
 - Add apt source entry.
 
-```bash
+```
 # cat > cat /etc/apt/sources.list.d/debian-lxc.github.io-lxc.list << END
 deb http://debian-lxc.github.io/packages/lxc jessie main
 deb-src http://debian-lxc.github.io/packages/lxc jessie main
@@ -19,20 +19,20 @@ END
 
 - Import public key.
 
-```bash
+```
 # apt-key adv --recv-keys --keyserver keyserver.ubuntu.com C6E77093
 ```
 
 - Check available packages.
 
-```bash
+```
 # apt-get update
 # apt-cache policy cgmanager lxc lxcfs 
 ```
 
 - Install LXC, forcing upgrade of related packages when necessary. 
 
-```bash
+```
 # apt-get install cgmanager lxc lxc-templates lxcfs
 ```
 
@@ -45,7 +45,7 @@ GRUB_CMDLINE_LINUX="apparmor=1 security=apparmor"
 ```
 
 - Update grub menu
-```bash
+```
 # update-grub
 ```
 
@@ -59,7 +59,7 @@ lxc.aa_allow_incomplete = 1
 
 - Verify apparmor status
 
-```bash
+```
 # aa-status
 apparmor module is loaded.
 4 profiles are loaded.
