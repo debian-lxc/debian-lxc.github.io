@@ -12,7 +12,7 @@ Use these steps to install lxc-1.1.4 on Debian Jessie
 - Add apt source entry.
 
 ```
-host# cat > /etc/apt/sources.list.d/debian-lxc.github.io-lxc.list << END
+host# cat > /etc/apt/sources.list.d/debian-lxc.list << END
 deb http://debian-lxc.github.io/packages/lxc jessie main
 deb-src http://debian-lxc.github.io/packages/lxc jessie main
 END
