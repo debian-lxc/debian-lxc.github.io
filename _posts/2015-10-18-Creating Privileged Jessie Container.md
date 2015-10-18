@@ -5,6 +5,7 @@ title: Creating Privileged Jessie Container
 ---
 
 
+
 The process is straightforward and quick using the download template.
 
 ## Prequisite
@@ -13,7 +14,7 @@ Latest stable version of lxc [installed](/installation.html)
 
 ## Install LXC using Download Template
 
-In this example, the container name is "c1"
+In this example, the container name is ``c1``
 
 ```
 host# lxc-create -n c1 -t download -- -d debian -r jessie -a amd64
