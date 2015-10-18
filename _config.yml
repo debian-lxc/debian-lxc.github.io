@@ -16,7 +16,7 @@ markdown:            redcarpet
 # About/contact
 author:
   name:              Fajar A. Nugraha
-#  url:               https://twitter.com/mdo
+  url:               https://github.com/fajarnugraha
   email:             github@fajar.net
 
 # Custom vars
