@@ -11,6 +11,7 @@ description:         'A series of HOWTOs on how to use latest stable version of 
 url:                 http://debian-lxc.github.io
 baseurl:             ''
 paginate:            5
+markdown:            redcarpet
 
 # About/contact
 author:
