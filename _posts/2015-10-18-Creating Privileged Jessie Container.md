@@ -1,6 +1,8 @@
 ---
-published: false
+published: true
+layout: post
 ---
+
 
 The process is straightforward and quick using the download template.
 
@@ -33,7 +35,7 @@ Use lxc-attach or chroot directly into the rootfs to set a root password
 or create user accounts.
 ```
 
-## Set ``root`` password using ``chroot``
+## Set root password using chroot
 
 ```
 host# chroot /var/lib/lxc/c1/rootfs passwd
