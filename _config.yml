@@ -1,22 +1,22 @@
 # Permalinks
 #
 # Use of `relative_permalinks` ensures post links from the index work properly.
-permalink:           pretty
+permalink:           /:title/
 relative_permalinks: true
 
 # Setup
-title:               Lanyon
-tagline:             'A Jekyll theme'
-description:         'A reserved <a href="http://jekyllrb.com" target="_blank">Jekyll</a> theme that places the utmost gravity on content with a hidden drawer. Made by <a href="https://twitter.com/mdo" target="_blank">@mdo</a>.'
-url:                 http://lanyon.getpoole.com
+title:               Debian LXC
+tagline:             'HOWTOs for using LXC on Debian'
+description:         'A series of HOWTO on how to use latest stable version of <a href="https://linuxcontainers.org/" target="_blank">Linux Containers</a> on Debian, including unprivileged containers'
+url:                 http://debian-lxc.github.io
 baseurl:             ''
 paginate:            5
 
 # About/contact
 author:
-  name:              Mark Otto
-  url:               https://twitter.com/mdo
-  email:             markdotto@gmail.com
+  name:              Fajar A. Nugraha
+#  url:               https://twitter.com/mdo
+  email:             github@fajar.net
 
 # Custom vars
 version:             1.0.0
