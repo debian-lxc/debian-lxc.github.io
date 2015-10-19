@@ -58,13 +58,35 @@ If you want to view the boot progress, you can immediately attach to ``tty0`` af
 host# lxc-start -n c1; lxc-console -n c1 -t 0
 ```
 
-Note that you can detach ``lxc-console`` using ``Ctrl-a q``. Check the container status from the host (using another session, or detach the ``lxc-console`` first)
+Check the container status from the host (using another session, or detach the ``lxc-console`` first)
 
 ```
 host# lxc-ls -f
 NAME  STATE    IPV4        IPV6  GROUPS  AUTOSTART
 --------------------------------------------------
 c1    RUNNING  10.0.3.234  -     -       NO
+```
+
+## Accessing the Container
+
+First way is with ``lxc-console``. You might need to press ``Enter`` to get login prompt to show. You can detach a running ``lxc-console`` using ``Ctrl-a q``. 
+
+```
+host$ lxc-console -n c1
+
+Connected to tty 1
+Type <Ctrl+a q> to exit the console, <Ctrl+a Ctrl+a> to enter Ctrl+a itself
+
+Debian GNU/Linux 8 c1 tty1
+
+c1 login:
+```
+
+Second way is with ``lxc-attach``. 
+
+```
+host$ lxc-attach -n c1
+root@c1:~#
 ```
 
 ## Recommended: install ssh server and text editor
