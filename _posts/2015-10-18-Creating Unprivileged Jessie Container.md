@@ -232,8 +232,6 @@ mesg: /dev/pts/0: Operation not permitted
 root@c1:~#
 ```
 
-
-
 ## Recommended: install ssh server and text editor
 
 Run this command inside the container
