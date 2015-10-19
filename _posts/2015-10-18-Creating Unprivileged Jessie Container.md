@@ -4,16 +4,14 @@ layout: post
 title: Creating Unprivileged Jessie Container
 ---
 
-Using unprivileged jessie container on jessie host is possible, but requires some additional setup compared to privileged containers.
-
-To use unprivileged containers, you need to:
+Using unprivileged jessie container on jessie host is possible, but requires some additional setup compared to privileged containers. In summary, you need to:
 
 - have uid & gid mappings assigned to the user. Check ``/etc/subuid`` and ``/etc/subgid``
 - allow the user to use veth with bridge
 - create special cgroup for the user
 - change the container's init from systemd to sysvinit.
 
-Notes on code snippets:
+## Code convention
 
 - Code started with ``host#`` are executed on the host as root. 
 - Code started with ``host$`` are executed on the host as normal user (non-root). 
@@ -34,7 +32,7 @@ user    veth    lxcbr0  10
 
 ## Create Special cgroup for the user
 
-Create a simple init script on ``/etc/init.d/user-cgroup``
+- Create a simple init script ``/etc/init.d/user-cgroup``
 
 ```
 #!/bin/bash
@@ -76,7 +74,7 @@ for USERNAME in $USERS;do
 done
 ```
 
-Run it, check the result, and then set it to run automatically on boot. All user listed in ``USERS`` variable in the above script (or ``/etc/default/user-cgroup``) should have their own cgroup under ``users``.
+- Run it, check the result, and then set it to run automatically on boot. All user listed in ``USERS`` variable in the above script (or ``/etc/default/user-cgroup``) should have their own cgroup under ``users``.
 
 ```
 host# invoke-rc.d user-cgroup start
@@ -97,14 +95,14 @@ host# ls /etc/rc*/*user-cgroup
 
 ## Modify user profile to use the cgroup on login
 
-Login as non-root user, edit ``$HOME/.profile``. Add these lines at the end
+- Login as non-root user, edit ``$HOME/.profile``. Add these lines at the end
 
 ```
 # move to root-created user-owned cgroup
 cgm movepidabs all /users/$USER $$
 ```
 
-Logout, and then login. Check the result, you should be on ``users/$USER`` cgroup
+- Logout, and then login again as non-root user. Check the result, you should be on ``users/$USER`` cgroup
 
 ```
 host$ echo $USER
@@ -125,7 +123,9 @@ host$ cat /proc/self/cgroup
 ## Create default container config for the user
 
 
-At minimum, you need to copy entries from ``/etc/lxc/default.conf`` and add id mappings. Get correct id mappings from ``/etc/subuid`` and ``/etc/subgid``
+At minimum, you need to copy entries from ``/etc/lxc/default.conf`` and add id mappings. 
+
+- Get correct id mappings from ``/etc/subuid`` and ``/etc/subgid``
 
 ```
 host$ grep $USER /etc/subuid /etc/subgid
@@ -133,7 +133,7 @@ host$ grep $USER /etc/subuid /etc/subgid
 /etc/subgid:user:624288:65536
 ```
 
-Create default container config
+- Create default container config
 
 ```
 host$ mkdir -p ~/.config/lxc
@@ -155,7 +155,7 @@ lxc.network.flags = up
 lxc.network.hwaddr = 00:16:3e:xx:xx:xx
 ```
 
-## Install LXC using Download Template
+## Create container using Download Template
  
 In this example, the container name is ``c1``.
  
@@ -215,7 +215,9 @@ c1    RUNNING  10.0.3.37  -     -       NO
 
 ## Accessing the Container
 
-First way is with ``lxc-console``. You might need to press ``Enter`` to get login prompt to show. You can detach a running ``lxc-console`` using ``Ctrl-a q``. 
+There are two ways to access the container that doesn't involve network:
+
+- ``lxc-console``. You might need to press ``Enter`` to get login prompt to show. You can detach a running ``lxc-console`` using ``Ctrl-a q``. 
 
 ```
 host$ lxc-console -n c1
@@ -228,7 +230,7 @@ Debian GNU/Linux 8 c1 tty1
 c1 login:
 ```
 
-Second way is with ``lxc-attach``. Since this is unprivileged container, you also need to setup some environment variables (e.g. PATH, HOME). The easiest way is to combine ``lxc-attach`` with ``sudo -i``. You can ignore the warning about ``/dev/pts/0``.
+- ``lxc-attach``. Since this is unprivileged container, you also need to setup some environment variables (e.g. PATH, HOME). The easiest way is to combine ``lxc-attach`` with ``sudo -i``. You can ignore the warning about ``/dev/pts/0``.
 
 ```
 host$ lxc-attach -n c1 -- sudo -i
@@ -238,7 +240,7 @@ root@c1:~#
 
 ## Recommended: install ssh server and text editor
 
-Run this command inside the container
+- Run this command inside the container
 
 ```
 c1# apt-get install openssh-server vim
