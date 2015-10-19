@@ -6,9 +6,10 @@ title: Creating Unprivileged Jessie Container
 
 To use unprivileged jessie container on jessie host, you need to create special cgroup for the user, and change the container's init from systemd to sysvinit.
 
-Code started with ``host#`` are executed on the host as root. 
-Code started with ``host$`` are executed on the host as normal user (non-root). 
-Code started with ``c1#`` are executed on the container as root. 
+Notes on code snippets:
+- Code started with ``host#`` are executed on the host as root. 
+- Code started with ``host$`` are executed on the host as normal user (non-root). 
+- Code started with ``c1#`` are executed on the container as root. 
 
 ## (Article in Progress)
 
