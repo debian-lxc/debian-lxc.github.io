@@ -102,6 +102,7 @@ root@c1:~#
 ```
 c1# apt-get update
 c1# apt-get install openssh-server vim
+c1# sed -i "s/required.*pam_loginuid.so/optional pam_loginuid.so/g" /etc/pam.d/*
 ```
 
 - Optionally, allow root login with ssh using password. Edit ``/etc/ssh/sshd_config``, change
