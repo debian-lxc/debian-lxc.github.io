@@ -15,8 +15,6 @@ Notes on code snippets:
 - Code started with ``host$`` are executed on the host as normal user (non-root). 
 - Code started with ``c1#`` are executed on the container as root. 
 
-## (Article in Progress)
-
 ## Prequisite
  
 Latest stable version of lxc [installed](/installation.html)
