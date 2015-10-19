@@ -145,7 +145,7 @@ host$ grep $USER /etc/subuid /etc/subgid
 /etc/subgid:user:624288:65536
 ```
 
-- Create default container config
+- Create default container config. Make sure the numbers on ``lxc.id_map`` matches what you see on ``/etc/subuid`` and ``/etc/subgid``
 
 ```
 host$ mkdir -p ~/.config/lxc
