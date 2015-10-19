@@ -4,15 +4,19 @@ layout: post
 title: Creating Privileged Jessie Container
 ---
 
+The process is straightforward using the download template.
 
+## Code convention
 
-The process is straightforward and quick using the download template.
+- Code started with ``host#`` are executed on the host as root. 
+- Code started with ``host$`` are executed on the host as normal user (non-root). 
+- Code started with ``c1#`` are executed on the container as root. 
 
 ## Prequisite
 
 Latest stable version of lxc [installed](/installation.html)
 
-## Install LXC using Download Template
+## Create container using Download Template
 
 In this example, the container name is ``c1``
 
@@ -69,7 +73,9 @@ c1    RUNNING  10.0.3.234  -     -       NO
 
 ## Accessing the Container
 
-First way is with ``lxc-console``. You might need to press ``Enter`` to get login prompt to show. You can detach a running ``lxc-console`` using ``Ctrl-a q``. 
+There are two ways to access the container that doesn't involve network:
+
+- ``lxc-console``. You might need to press ``Enter`` to get login prompt to show. You can detach a running ``lxc-console`` using ``Ctrl-a q``. 
 
 ```
 host$ lxc-console -n c1
@@ -82,7 +88,7 @@ Debian GNU/Linux 8 c1 tty1
 c1 login:
 ```
 
-Second way is with ``lxc-attach``. 
+- ``lxc-attach``. 
 
 ```
 host$ lxc-attach -n c1
@@ -91,20 +97,14 @@ root@c1:~#
 
 ## Recommended: install ssh server and text editor
 
-First you need to get inside the container (use ``lxc-console`` session earlier, or ``lxc-attach``)
-
-```
-host# lxc-attach -n c1
-```
-
-Next, install ssh server and text editor
+- Run this command inside the container
 
 ```
 c1# apt-get update
 c1# apt-get install openssh-server vim
 ```
 
-Optionally, allow root login with ssh using password. Edit ``/etc/ssh/sshd_config``, change
+- Optionally, allow root login with ssh using password. Edit ``/etc/ssh/sshd_config``, change
 
 ```
 PermitRootLogin without-password
@@ -116,7 +116,7 @@ to
 PermitRootLogin yes
 ```
 
-and then restart ssh server
+- Restart ssh server
 
 ```
 c1# invoke-rc.d ssh restart
