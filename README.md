@@ -2,8 +2,6 @@
 
 A series of HOWTOs on how to use latest stable version of [Linux Containers](https://linuxcontainers.org) on Debian, including unprivileged containers.
 
-[Web Page](http://debian-lxc.github.io) created using [Lanyon](https://github.com/poole/lanyon)
-
 ## Contents
 
 - [Install LXC](#install-lxc)
