@@ -57,6 +57,16 @@ host# update-grub
 lxc.aa_allow_incomplete = 1
 ```
 
+- Enable ``unprivileged_userns_clone``. Needed for unprivileged containers.
+
+```
+host# cat > /etc/sysctl.d/50-lxc-unprivileged.conf << END
+kernel.unprivileged_userns_clone = 1
+END
+
+host# sysctl --system -p
+```
+
 - Reboot
 
 - Verify apparmor status
