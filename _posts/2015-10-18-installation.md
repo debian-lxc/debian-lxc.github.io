@@ -82,9 +82,9 @@ apparmor
 
 ## Optional: Create init scripts for lxc-autostart and lxc-net
 
-By default lxc package will install systemd services. If you replace ssytemd with sysvinit on the host, create these init scripts.
+By default lxc package will install systemd service units. If you replace ssytemd with sysvinit on the host, You need to create init scripts manually.
 
-``/etc/init.d/lxc-net``
+- Create ``/etc/init.d/lxc-net``
 
 ```
 #!/bin/bash
@@ -113,7 +113,7 @@ case "$1" in
 esac
 ```
 
-``/etc/init.d/lxc-autostart``
+- Create ``/etc/init.d/lxc-autostart``
 
 ```
 #!/bin/bash
@@ -144,15 +144,17 @@ case "$1" in
 esac
 ```
 
-Also edit one line on ``/etc/init.d/lxcfs``
+- Edit one line on ``/etc/init.d/lxcfs``
 
 ```
 # Required-Start:       cgmanager
 ```
 
-Activate and set them to automatically run on boot
+- Activate and set them to automatically run on boot
 
 ```
+host# chmod 755 /etc/init.d/lxc-net /etc/init.d/lxc-autostart
+
 host# invoke-rc.d lxcfs start
 
 host# invoke-rc.d lxc-net start
