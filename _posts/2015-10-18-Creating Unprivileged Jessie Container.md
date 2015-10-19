@@ -194,7 +194,7 @@ or create user accounts.
 
 ## Post-Create Container Configuration using chroot and lxc-usernsexec
 
-Don't start the container just yet. We need to set root password, replace systemd with sysvinit, and install sudo.
+Don't start the container just yet. We need to set root password, replace systemd with sysvinit, install sudo, and fix pam settings bug.
 
 ```
 host$ lxc-usernsexec -- /usr/sbin/chroot ~/.local/share/lxc/c1/rootfs passwd
@@ -202,6 +202,8 @@ host$ lxc-usernsexec -- /usr/sbin/chroot ~/.local/share/lxc/c1/rootfs passwd
 host$ lxc-usernsexec -- /usr/sbin/chroot ~/.local/share/lxc/c1/rootfs apt-get update
 
 host$ lxc-usernsexec -- /usr/sbin/chroot ~/.local/share/lxc/c1/rootfs bash -c "PATH=/sbin:/usr/sbin:$PATH apt-get install sysvinit-core sudo"
+
+host$ lxc-usernsexec -- /usr/sbin/chroot ~/.local/share/lxc/c1/rootfs sed -i "s/required.*pam_loginuid.so/optional pam_loginuid.so/g" /etc/pam.d/login
 ```
 
 ## Start Container
@@ -256,6 +258,7 @@ root@c1:~#
 
 ```
 c1# apt-get install openssh-server vim
+c1# sed -i "s/required.*pam_loginuid.so/optional pam_loginuid.so/g" /etc/pam.d/sshd
 ```
 
 Optionally, allow root login with ssh using password. Edit ``/etc/ssh/sshd_config``, change
