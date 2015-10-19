@@ -78,7 +78,7 @@ There are two ways to access the container that doesn't involve network:
 - ``lxc-console``. You might need to press ``Enter`` to get login prompt to show. You can detach a running ``lxc-console`` using ``Ctrl-a q``. 
 
 ```
-host$ lxc-console -n c1
+host# lxc-console -n c1
 
 Connected to tty 1
 Type <Ctrl+a q> to exit the console, <Ctrl+a Ctrl+a> to enter Ctrl+a itself
@@ -91,7 +91,7 @@ c1 login:
 - ``lxc-attach``. 
 
 ```
-host$ lxc-attach -n c1
+host# lxc-attach -n c1
 root@c1:~#
 ```
 
