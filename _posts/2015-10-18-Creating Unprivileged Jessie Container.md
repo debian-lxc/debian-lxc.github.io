@@ -73,12 +73,17 @@ Run it, check the result, and then set it to run automatically on boot. All user
 
 ```
 host# invoke-rc.d user-cgroup start
+
 host# cgm movepidabs all / $$
+
 host# cgm listchildren cpu
 users
+
 host# cgm listchildren cpu users
 user
+
 host# update-rc.d user-cgroup defaults
+
 host# ls /etc/rc*/*user-cgroup
 /etc/rc2.d/S02user-cgroup  /etc/rc3.d/S02user-cgroup  /etc/rc4.d/S02user-cgroup  /etc/rc5.d/S02user-cgroup
 ```
@@ -110,22 +115,144 @@ host$ cat /proc/self/cgroup
 1:blkio:/users/user
 ```
 
+## Create default container config for the user
+
+
+At minimum, you need to copy entries from ``/etc/lxc/default.conf`` and add id mappings. Get correct id mappings from ``/etc/subuid`` and ``/etc/subgid``
+
+```
+host$ grep $USER /etc/subuid /etc/subgid
+/etc/subuid:user:624288:65536
+/etc/subgid:user:624288:65536
+```
+
+Create default container config
+
+```
+host$ mkdir -p ~/.config/lxc
+
+host$ cat > ~/.config/lxc/default.conf << END
+lxc.id_map = u 0 624288 65536
+lxc.id_map = g 0 624288 65536
+END
+
+host$ cat /etc/lxc/default.conf >> ~/.config/lxc/default.conf
+
+host$ cat ~/.config/lxc/default.conf
+lxc.id_map = u 0 624288 65536
+lxc.id_map = g 0 624288 65536
+lxc.aa_allow_incomplete = 1
+lxc.network.type = veth
+lxc.network.link = lxcbr0
+lxc.network.flags = up
+lxc.network.hwaddr = 00:16:3e:xx:xx:xx
+```
+
 ## Install LXC using Download Template
  
 In this example, the container name is ``c1``.
  
 ```
 host$ lxc-create -n c1 -t download -- -d debian -r jessie -a amd64
+Setting up the GPG keyring
+Downloading the image index
+Downloading the rootfs
+Downloading the metadata
+The image cache is now ready
+Unpacking the rootfs
+
+---
+You just created a Debian container (release=jessie, arch=amd64, variant=default)
+
+To enable sshd, run: apt-get install openssh-server
+
+For security reason, container images ship without user accounts
+and without a root password.
+
+Use lxc-attach or chroot directly into the rootfs to set a root password
+or create user accounts.
 ```
 
 ## Post-Create Container Configuration using chroot and lxc-usernsexec
 
-todo
+Don't start the container just yet. We need to set root password, replace systemd with sysvinit, and install sudo.
+
+```
+host$ lxc-usernsexec -- /usr/sbin/chroot ~/.local/share/lxc/c1/rootfs passwd
+
+host$ lxc-usernsexec -- /usr/sbin/chroot ~/.local/share/lxc/c1/rootfs apt-get update
+
+host$ lxc-usernsexec -- /usr/sbin/chroot ~/.local/share/lxc/c1/rootfs bash -c "PATH=/sbin:/usr/sbin:$PATH apt-get install sysvinit-core sudo"
+```
 
 ## Start Container
 
-todo
+```
+host$ lxc-start -n c1
+```
+
+If you want to view the boot progress, you can immediately attach to ``tty0`` after starting the container. 
+
+```
+host$ lxc-start -n c1; lxc-console -n c1 -t 0
+```
+
+You can detach ``lxc-console`` using ``Ctrl-a q``. Check the container status from the host (using another session, or detach the ``lxc-console`` first)
+
+```
+host$ lxc-ls -f
+NAME  STATE    IPV4       IPV6  GROUPS  AUTOSTART
+-------------------------------------------------
+c1    RUNNING  10.0.3.37  -     -       NO
+```
+
+## Accessing the Container
+
+First way is with ``lxc-console``. You might need to press ``Enter`` to get login prompt to show.
+
+```
+host$ lxc-console -n c1
+
+Connected to tty 1
+Type <Ctrl+a q> to exit the console, <Ctrl+a Ctrl+a> to enter Ctrl+a itself
+
+Debian GNU/Linux 8 c1 tty1
+
+c1 login:
+```
+
+Second way is with ``lxc-attach``. Since this is unprivileged container, you also need to setup some environment variables (e.g. PATH, HOME). The easiest way is to combine ``lxc-attach`` with ``sudo -i``. You can ignore the warning about ``/dev/pts/0``.
+
+```
+host$ lxc-attach -n c1 -- sudo -i
+mesg: /dev/pts/0: Operation not permitted
+root@c1:~#
+```
+
+
 
 ## Recommended: install ssh server and text editor
 
-todo
+Run this command inside the container
+
+```
+c1# apt-get install openssh-server vim
+```
+
+Optionally, allow root login with ssh using password. Edit ``/etc/ssh/sshd_config``, change
+
+```
+PermitRootLogin without-password
+```
+
+to
+
+```
+PermitRootLogin yes
+```
+
+and then restart ssh server
+
+```
+c1# invoke-rc.d ssh restart
+```
