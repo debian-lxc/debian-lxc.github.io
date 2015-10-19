@@ -200,7 +200,7 @@ If you want to view the boot progress, you can immediately attach to ``tty0`` af
 host$ lxc-start -n c1; lxc-console -n c1 -t 0
 ```
 
-You can detach ``lxc-console`` using ``Ctrl-a q``. Check the container status from the host (using another session, or detach the ``lxc-console`` first)
+Check the container status from the host (using another session, or detach the ``lxc-console`` first)
 
 ```
 host$ lxc-ls -f
@@ -211,7 +211,7 @@ c1    RUNNING  10.0.3.37  -     -       NO
 
 ## Accessing the Container
 
-First way is with ``lxc-console``. You might need to press ``Enter`` to get login prompt to show.
+First way is with ``lxc-console``. You might need to press ``Enter`` to get login prompt to show. You can detach a running ``lxc-console`` using ``Ctrl-a q``. 
 
 ```
 host$ lxc-console -n c1
