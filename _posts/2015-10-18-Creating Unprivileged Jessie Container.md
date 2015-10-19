@@ -74,11 +74,21 @@ for USERNAME in $USERS;do
 done
 ```
 
-- Run it, check the result, and then set it to run automatically on boot. All user listed in ``USERS`` variable in the above script (or ``/etc/default/user-cgroup``) should have their own cgroup under ``users``.
-
+- Make it executable
+ 
 ```
 host# chmod 755 /etc/init.d/user-cgroup
+```
 
+- Update systemd to recognize the new init script (needed if you use systemd as init on the host, which is the default)
+
+```
+host# systemctl daemon-reload
+```
+
+- Run the service, check the result, and then set it to run automatically on boot. All user listed in ``USERS`` variable in the above script (or ``/etc/default/user-cgroup``) should have their own cgroup under ``users``.
+
+```
 host# invoke-rc.d user-cgroup start
 
 host# cgm movepidabs all / $$
