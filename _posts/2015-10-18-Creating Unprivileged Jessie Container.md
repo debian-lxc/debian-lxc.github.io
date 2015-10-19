@@ -77,6 +77,8 @@ done
 - Run it, check the result, and then set it to run automatically on boot. All user listed in ``USERS`` variable in the above script (or ``/etc/default/user-cgroup``) should have their own cgroup under ``users``.
 
 ```
+host# chmod 755 /etc/init.d/user-cgroup
+
 host# invoke-rc.d user-cgroup start
 
 host# cgm movepidabs all / $$
