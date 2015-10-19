@@ -4,7 +4,11 @@ layout: post
 title: Creating Unprivileged Jessie Container
 ---
 
-To use unprivileged jessie container on jessie host, you need to create special cgroup for the user, and change the container's init from systemd to sysvinit.
+To use unprivileged jessie container on jessie host, you need to:
+- have uid & gid mappings assigned to the user. Check ``/etc/subuid`` and ``/etc/subgid``
+- allow the user to use veth with bridge
+- create special cgroup for the user
+- change the container's init from systemd to sysvinit.
 
 Notes on code snippets:
 - Code started with ``host#`` are executed on the host as root. 
