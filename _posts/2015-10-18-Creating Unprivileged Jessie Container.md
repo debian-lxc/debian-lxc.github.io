@@ -93,7 +93,7 @@ host# ls /etc/rc*/*user-cgroup
 
 ## Modify user profile to use the cgroup on login
 
-Edit user's ``$HOME/.profile``, add these lines at the end
+Login as non-root user, edit ``$HOME/.profile``. Add these lines at the end
 
 ```
 # move to root-created user-owned cgroup
