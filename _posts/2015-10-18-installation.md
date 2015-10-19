@@ -79,3 +79,91 @@ apparmor module is loaded.
 host# ls /sys/kernel/security/
 apparmor
 ```
+
+## Optional: Create init scripts for lxc-autostart and lxc-net
+
+By default lxc package will install systemd services. If you replace ssytemd with sysvinit on the host, create these init scripts.
+
+``/etc/init.d/lxc-net``
+
+```
+#!/bin/bash
+### BEGIN INIT INFO
+# Provides:          lxc-net
+# Required-Start:    cgmanager
+# Required-Stop:
+# Default-Start:     2 3 4 5
+# Default-Stop:
+# Short-Description: Auto create lxc bridge
+### END INIT INFO
+
+PATH="/sbin:/bin:/usr/sbin:/usr/bin"
+
+. /lib/lsb/init-functions
+
+case "$1" in
+  start)
+    /usr/lib/x86_64-linux-gnu/lxc/lxc-net start
+    ;;
+  stop)
+    /usr/lib/x86_64-linux-gnu/lxc/lxc-net start
+    ;;
+  restart|force-reload) exit 0 ;;
+  *) echo "Usage: $0 {start|stop|restart|force-reload}" >&2; exit 1 ;;
+esac
+```
+
+``/etc/init.d/lxc-autostart``
+
+```
+#!/bin/bash
+### BEGIN INIT INFO
+# Provides:          lxc-autostart
+# Required-Start:    lxc-net
+# Required-Stop:
+# Default-Start:     2 3 4 5
+# Default-Stop:
+# Short-Description: Auto start user containers
+### END INIT INFO
+
+PATH="/sbin:/bin:/usr/sbin:/usr/bin"
+
+. /lib/lsb/init-functions
+
+case "$1" in
+  start)
+    /usr/lib/x86_64-linux-gnu/lxc/lxc-devsetup
+    /usr/lib/x86_64-linux-gnu/lxc/lxc-apparmor-load
+    /usr/lib/x86_64-linux-gnu/lxc/lxc-containers start
+    ;;
+  stop)
+    /usr/lib/x86_64-linux-gnu/lxc/lxc-containers stop
+    ;;
+  restart|force-reload) exit 0 ;;
+  *) echo "Usage: $0 {start|stop|restart|force-reload}" >&2; exit 1 ;;
+esac
+```
+
+Also edit one line on ``/etc/init.d/lxcfs``
+
+```
+# Required-Start:       cgmanager
+```
+
+Activate and set them to automatically run on boot
+
+```
+host# invoke-rc.d lxcfs start
+
+host# invoke-rc.d lxc-net start
+
+host# invoke-rc.d lxc-autostart start
+
+host# update-rc.d lxcfs remove
+
+host# update-rc.d lxcfs defaults
+
+host# update-rc.d lxc-net defaults
+
+host# update-rc.d lxc-autostart defaults
+```
