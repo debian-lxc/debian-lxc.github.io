@@ -23,8 +23,8 @@ In summary, you need to:
  
 - Latest stable version of lxc [installed](/installation.html)
 - User-owned cgroup. This is created and assigned using either:
-  - [init script and profile](/Create User-Owned Cgroup.html), or
-  - [pam_systemd](/Update Systemd.md)
+  - [init script and user profile](/Create User-Owned Cgroup.html), or
+  - [pam_systemd](/Update Systemd.html)
 
 ## Allow normal user to use veth with bridge
 
