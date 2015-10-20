@@ -41,10 +41,20 @@ host# apt-cache policy systemd apparmor mount
 host# apt-get install systemd-sysv libpam-systemd dbus
 ```
 
-Reboot, then check the new systemd version
+Reboot, login, then check the new systemd version. Each controller should have its own cgroup now.
 
 ```
 host# systemd --version
 systemd 225
 +PAM +AUDIT +SELINUX +IMA +APPARMOR +SMACK +SYSVINIT +UTMP +LIBCRYPTSETUP +GCRYPT +GNUTLS +ACL +XZ -LZ4 +SECCOMP +BLKID -ELFUTILS +KMOD -IDN
+
+host# cat /proc/self/cgroup
+8:devices:/user.slice/user-0.slice/session-9.scope
+7:cpu,cpuacct:/user.slice/user-0.slice/session-9.scope
+6:net_cls,net_prio:/user.slice/user-0.slice/session-9.scope
+5:blkio:/user.slice/user-0.slice/session-9.scope
+4:freezer:/user.slice/user-0.slice/session-9.scope
+3:cpuset:/user.slice/user-0.slice/session-9.scope
+2:perf_event:/user.slice/user-0.slice/session-9.scope
+1:name=systemd:/user.slice/user-0.slice/session-9.scope
 ```
