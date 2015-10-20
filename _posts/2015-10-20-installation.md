@@ -94,5 +94,5 @@ apparmor
 
 - If you replace sytemd with sysvinit on the host, you need to [create init scripts manually](/Create%20Init%20Scripts.html)
 
-- If you keep sytemd on the host, you might want to [use Ubuntu-patched systemd](/Update%20Systemd.html). This process will help if you intend to [use unprivileged containers](/Create%20Unprivileged%20Jessie%20Container.html).
+- If you keep sytemd on the host, you might want to [use Ubuntu-patched systemd](/Update%20Systemd.html). Especially if you intend to [use unprivileged containers](/Create%20Unprivileged%20Jessie%20Container.html).
 
