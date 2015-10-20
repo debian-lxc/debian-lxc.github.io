@@ -1,8 +1,7 @@
 ---
 published: true
 layout: post
-title: Creating Unprivileged Jessie Container
----
+title: Create Init Scripts
 
 Lxc package from this repository will install systemd service units. If you replace sytemd with sysvinit on the host, You need to create init scripts manually.
 

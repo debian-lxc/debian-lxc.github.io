@@ -1,7 +1,7 @@
 ---
 published: true
 layout: post
-title: Creating Unprivileged Jessie Container
+title: Create Unprivileged Jessie Container
 ---
 
 Using unprivileged jessie container on jessie host is possible, but requires some additional setup compared to privileged containers. 

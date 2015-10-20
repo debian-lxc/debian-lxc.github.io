@@ -1,7 +1,7 @@
 ---
 published: true
 layout: post
-title: Creating Privileged Jessie Container
+title: Create Privileged Jessie Container
 ---
 
 The process is straightforward using the download template.
