@@ -38,7 +38,7 @@ host# apt-cache policy systemd apparmor mount
 ## Install New Packages
 
 ```
-host# apt-get install systemd-sysv systemd
+host# apt-get install systemd-sysv libpam-systemd dbus
 ```
 
 Reboot, then check the new systemd version
