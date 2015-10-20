@@ -13,7 +13,7 @@ Ubuntu's version of systemd has the following things:
 
 Use these steps to install Ubuntu Wily's version of systemd, ported to Jessie, along with its dependencies. Except for systemd, other packages were backported (e.g. apparmor) or copied (e.g. mount) from Stretch.
 
-## Add Apt Source Entry.
+## Add Apt Source Entry
 
 ```
 host# cat > /etc/apt/sources.list.d/debian-lxc-systemd.list << END
@@ -22,7 +22,13 @@ deb-src http://debian-lxc.github.io/packages/systemd jessie main
 END
 ```
 
-## Check Available Packages.
+## Import public key
+
+```
+host# apt-key adv --recv-keys --keyserver keyserver.ubuntu.com C6E77093
+```
+
+## Check Available Packages
 
 ```
 host# apt-get update
