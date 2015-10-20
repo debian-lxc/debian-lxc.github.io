@@ -1,7 +1,9 @@
-By default, Debian Jessie's version of systemd is not suitable to run unprivileged containers. To get the best experience with unprivileged containers, you need to replace systemd with Ubuntu's version.
+By default, Debian Jessie's version of systemd is not suitable to run unprivileged containers. To get the best experience, you need to replace systemd with Ubuntu's version.
 
-- On the host, Ubuntu's systemd contains a patch which automatically create a user-owned cgroup for every user on login.
-- On the container, Ubuntu's systemd is recent-enough that is has fixes needed for some services (e.g. systemd-journald) to run correctly inside unprivileged container.
+Ubuntu's version of systemd has the following things:
+
+- It contains a patch which automatically create a user-owned cgroup for every user on login on the host.
+- It is recent-enough that is has fixes needed for some services (e.g. systemd-journald) to run correctly inside unprivileged container.
 
 Use these steps to install Ubuntu Wily's version of systemd, ported to Jessie, along with its dependencies. Except for systemd, other packages were backported (e.g. apparmor) or copied (e.g. mount) from Stretch.
 
