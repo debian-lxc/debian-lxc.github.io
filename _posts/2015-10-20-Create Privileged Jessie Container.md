@@ -9,7 +9,6 @@ The process is straightforward using the download template.
 ## Code convention
 
 - Code started with ``host#`` are executed on the host as root. 
-- Code started with ``host$`` are executed on the host as normal user (non-root). 
 - Code started with ``c1#`` are executed on the container as root. 
 
 ## Prequisite
