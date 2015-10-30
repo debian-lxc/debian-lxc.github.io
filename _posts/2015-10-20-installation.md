@@ -4,10 +4,13 @@ layout: post
 title: Installation
 ---
 
-
 Use these steps to install lxc-1.1.4 on Debian Jessie
 
-## Install LXC from This Repository
+## Code convention
+
+- Code started with ``host#`` are executed on the host as root. 
+
+## Install LXC
 
 - Add apt source entry.
 
