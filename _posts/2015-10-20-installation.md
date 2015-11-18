@@ -4,7 +4,7 @@ layout: post
 title: Installation
 ---
 
-Use these steps to install lxc-1.1.4 on Debian Jessie
+Use these steps to install lxc-1.1.5 on Debian Jessie
 
 ## Code convention
 
