@@ -11,7 +11,7 @@ In summary, you need to:
 - have uid & gid mappings assigned to the user. Check ``/etc/subuid`` and ``/etc/subgid``
 - allow the user to use veth with bridge
 - create special cgroup for the user
-- change the container's init from systemd to sysvinit.
+- change the container's init from systemd to sysvinit, or use [Ubuntu-patched systemd on the container](/Update%20Systemd.html).
 
 ## Code convention
 
@@ -97,16 +97,30 @@ or create user accounts.
 
 ## Post-Create Container Configuration using chroot and lxc-usernsexec
 
-Don't start the container just yet. We need to set root password, replace systemd with sysvinit, install sudo, and fix pam settings bug.
+Don't start the container just yet. Set root password
 
 ```
 host$ lxc-usernsexec -- /usr/sbin/chroot ~/.local/share/lxc/c1/rootfs passwd
+```
 
+Install sudo
+
+```
 host$ lxc-usernsexec -- /usr/sbin/chroot ~/.local/share/lxc/c1/rootfs apt-get update
 
-host$ lxc-usernsexec -- /usr/sbin/chroot ~/.local/share/lxc/c1/rootfs bash -c "PATH=/sbin:/usr/sbin:$PATH apt-get install sysvinit-core sudo"
+host$ lxc-usernsexec -- /usr/sbin/chroot ~/.local/share/lxc/c1/rootfs bash -c "PATH=/sbin:/usr/sbin:$PATH apt-get install sudo"
+```
 
+Fix pam settings bug.
+
+```
 host$ lxc-usernsexec -- /usr/sbin/chroot ~/.local/share/lxc/c1/rootfs sed -i "s/required.*pam_loginuid.so/optional pam_loginuid.so/g" /etc/pam.d/login
+```
+
+Replace systemd with sysvinit. Only needed if you don't intend to use [Ubuntu-patched systemd on the container](/Update%20Systemd.html).
+
+```
+host$ lxc-usernsexec -- /usr/sbin/chroot ~/.local/share/lxc/c1/rootfs bash -c "PATH=/sbin:/usr/sbin:$PATH apt-get install sysvinit-core"
 ```
 
 ## Start Container
