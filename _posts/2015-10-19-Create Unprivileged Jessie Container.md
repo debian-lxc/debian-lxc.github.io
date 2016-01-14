@@ -11,7 +11,7 @@ In summary, you need to:
 - have uid & gid mappings assigned to the user. Check ``/etc/subuid`` and ``/etc/subgid``
 - allow the user to use veth with bridge
 - create special cgroup for the user
-- change the container's init from systemd to sysvinit, or use [Ubuntu-patched systemd on the container](/Update%20Systemd.html).
+- change the container's init from systemd to sysvinit. This is recommended even if you intend to use [Ubuntu-patched systemd on the container](/Update%20Systemd.html) later
 
 ## Code convention
 
@@ -117,11 +117,13 @@ Fix pam settings bug.
 host$ lxc-usernsexec -- /usr/sbin/chroot ~/.local/share/lxc/c1/rootfs sed -i "s/required.*pam_loginuid.so/optional pam_loginuid.so/g" /etc/pam.d/login
 ```
 
-Replace systemd with sysvinit. Only needed if you don't intend to use [Ubuntu-patched systemd on the container](/Update%20Systemd.html).
+Replace systemd with sysvinit.
 
 ```
 host$ lxc-usernsexec -- /usr/sbin/chroot ~/.local/share/lxc/c1/rootfs bash -c "PATH=/sbin:/usr/sbin:$PATH apt-get install sysvinit-core"
 ```
+
+If you need systemd inside the container, follow [these instructions](/Update%20Systemd.html) after you successfully start and access your container.
 
 ## Start Container
 
