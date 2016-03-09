@@ -40,12 +40,12 @@ host# apt-cache policy cgmanager lxc lxcfs
 host# apt-get install cgmanager lxc lxc-templates lxcfs
 ```
 
-## Enable Apparmor
+## Enable Apparmor and Memory Cgroup Support
 
-- Edit existing kernel command line on ``/etc/default/grub`` to add apparmor-related entries. If you already have other entries present, add them at the end.
+- Edit existing kernel command line on ``/etc/default/grub`` to add these entries. If you already have other entries present, add them at the end.
 
 ```
-GRUB_CMDLINE_LINUX="apparmor=1 security=apparmor"
+GRUB_CMDLINE_LINUX="apparmor=1 security=apparmor cgroup_enable=memory swapaccount=1"
 ```
 
 - Update grub menu
