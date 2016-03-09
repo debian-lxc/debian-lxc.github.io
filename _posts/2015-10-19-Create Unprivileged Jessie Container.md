@@ -11,7 +11,7 @@ In summary, you need to:
 - have uid & gid mappings assigned to the user. Check ``/etc/subuid`` and ``/etc/subgid``
 - allow the user to use veth with bridge
 - create special cgroup for the user
-- change the container's init from systemd to sysvinit. This is recommended even if you intend to use [Ubuntu-patched systemd on the container](/Update%20Systemd.html) later
+- change the container's init from systemd to sysvinit. This is recommended even if you intend to use [Ubuntu-patched systemd on the container](/Update-Systemd.html) later
 
 ## Code convention
 
